@@ -6,9 +6,9 @@ USE chat;
 
 CREATE TABLE messages (
   id int AUTO_INCREMENT,
-  roomname varchar(30),
   username varchar(30),
-  message varchar(30),
+  message varchar(300),
+  roomname varchar(30),
   PRIMARY KEY (id)
 );
 
