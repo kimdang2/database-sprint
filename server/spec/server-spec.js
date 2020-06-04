@@ -20,7 +20,9 @@ describe('Persistent Node Chat Server', function () {
 
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
-    dbConnection.query('truncate table ' + tablename, done);
+    dbConnection.query('truncate table ' + tablename, () => {
+      dbConnection.query('truncate table ' + 'users', done)
+    });
   });
 
   afterEach(function () {
@@ -83,6 +85,48 @@ describe('Persistent Node Chat Server', function () {
         var messageLog = JSON.parse(body);
         expect(messageLog[0].message).to.equal('Men like you can never change!');
         expect(messageLog[0].roomname).to.equal('main');
+        done();
+      });
+    });
+  });
+  it('Should output a user from the DB', function (done) {
+    // Let's insert a message into the db
+    var queryString = 'INSERT INTO users (username) VALUES (?)';
+    var queryArgs = ['Taylor Swift'];
+    // TODO - The exact query string and query args to use
+    // here depend on the schema you design, so I'll leave
+    // them up to you. */
+
+    dbConnection.query(queryString, queryArgs, function (err) {
+      if (err) { throw err; }
+
+      // Now query the Node chat server and see if it returns
+      // the message we just inserted:
+      request('http://127.0.0.1:3000/classes/users', function (error, response, body) {
+        var userLog = JSON.parse(body);
+        expect(userLog[0].username).to.equal('Taylor Swift');
+        done();
+      });
+    });
+  });
+
+  it('Should output all user from the DB', function (done) {
+    // Let's insert a message into the db
+    var queryString = 'INSERT INTO users (username) VALUES (?),(?),(?)';
+    var queryArgs = ['Taylor Swift', 'Not Taylor Swift', 'Saylor Twift'];
+    // TODO - The exact query string and query args to use
+    // here depend on the schema you design, so I'll leave
+    // them up to you. */
+
+    dbConnection.query(queryString, queryArgs, function (err) {
+      if (err) { throw err; }
+
+      // Now query the Node chat server and see if it returns
+      // the message we just inserted:
+      request('http://127.0.0.1:3000/classes/users', function (error, response, body) {
+        var userLog = JSON.parse(body);
+        expect(userLog.length).to.equal(3);
+        expect(userLog[1].username).to.equal('Not Taylor Swift');
         done();
       });
     });

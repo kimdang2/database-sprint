@@ -14,6 +14,27 @@ module.exports = {
     models.messages.create(req.body).then(() => {
       res.sendStatus(201);
       //res.send('message posted');
-    })
+    });
   } // a function which handles posting a message to the database
 };
+
+//sequelize:
+// module.exports = {
+//   get: function (req, res) {
+//     models.messages.Message.sync()
+//       .then(() => {
+//         res.status(200);
+//         res.send(models.Message.findAll());
+//       });
+//   },
+//   post: function (req, res) {
+//     models.messages.Message.sync()
+//       .then(() => {
+//         return models.messages.Message.create(req.body);
+//       })
+//       .then(() => {
+//         res.status(201);
+//         res.send('message posted');
+//       });
+//   }
+// }

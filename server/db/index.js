@@ -19,3 +19,12 @@ con.connect(function(err) {
 
 
 module.exports = con;
+
+
+//sequelize
+// var Sequelize = require('sequelize');
+// var db = new Sequelize('chat', 'root', '', {
+//   host: 'localhost',
+//   dialect: 'mysql'
+// });
+// module.exports = db;

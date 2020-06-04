@@ -1,3 +1,4 @@
+var Sequelize = require('sequelize');
 var db = require('../db');
 var Promise = require('bluebird');
 
@@ -8,8 +9,6 @@ module.exports = {
         if (err) {
           reject(err);
         } else {
-          console.log('getall results are', results);
-          console.log('getall fields are', fields);
           resolve(results);
         }
       }));
@@ -19,7 +18,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let arr = [data.username, data.message, data.roomname];
       //console.log(data.message.length);
-      db.query('INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?)', arr ,((err, results, fields) => {
+      db.query('INSERT INTO messages (username, message, roomname) VALUES (?, ?, ?)', arr, ((err, results, fields) => {
         if (err) {
           reject(err);
         } else {
@@ -29,3 +28,12 @@ module.exports = {
     });
   } // a function which can be used to insert a message into the database
 };
+
+//sequelize
+// module.exports = {
+//   Message: db.define('Message', {
+//     userid: Sequelize.INTEGER,
+//     text: Sequelize.STRING,
+//     roomname: Sequelize.STRING
+//   })
+// }
