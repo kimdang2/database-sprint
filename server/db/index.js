@@ -1,14 +1,16 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
+  host: 'localhost',
+  user: 'root',
   //database: 'chat'
 });
 
 con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+  if (err) {
+    throw err;
+  }
+  console.log('Connected!');
 });
 
 // Create a database connection and export it from this file.
